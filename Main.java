@@ -1,11 +1,9 @@
-
 import java.util.Scanner;
 import parking.ParkingLot;
 import vehicles.Car;
 import vehicles.Bike;
 import vehicles.Truck;
 import vehicles.Vehicle;
-
 
 public class Main {
     public static void main(String[] args) {
@@ -65,9 +63,14 @@ public class Main {
                     sc.nextLine(); // Consume the newline character after reading the floor number
                     System.out.println("Enter Num Plate of the vehicle:");
                     String numPlate = sc.nextLine();
-                    Vehicle retrievedVehicle = parkingLot.retrieveVehicle(floorNumber, numPlate);
+                    System.out.println("Enter the number of hours parked:");
+                    int hoursParked = sc.nextInt();
+                    sc.nextLine();
+                    
+                    Object retrievedVehicle = parkingLot.retrieveVehicle(floorNumber, numPlate,hoursParked);
                     if (retrievedVehicle != null) {
-                        System.out.println("Vehicle with Num Plate " + numPlate + " retrieved successfully from Floor " + floorNumber + ".");
+                        double payment = calculatePayment(hoursParked); 
+                        System.out.println("Payment for vehicle with Num Plate " + numPlate + " is: $" + payment);
                     }
                     break;
 
@@ -79,6 +82,19 @@ public class Main {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+        }
+    }
+    
+    // Payment calculation method based on the logic from your previous code
+    private static double calculatePayment(int hoursParked) {
+        if (hoursParked < 1) {
+            return 20;
+        } else if (hoursParked < 2) {
+            return 40;
+        } else if (hoursParked < 4) {
+            return 60;
+        } else {
+            return 1000;
         }
     }
 }
